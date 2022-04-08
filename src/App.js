@@ -1,23 +1,40 @@
-import logo from './logo.svg';
+
 import './App.css';
+import {BrowserRouter, Link, Route, Switch} from 'react-router-dom';
+import Home from './Componentes/Home/Home';
+import Numero from './Componentes/Numero/Numero';
+import Palabra from './Componentes/Palabra/Palabra';
+import Color from './Componentes/Color/Color'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <ul className='navegacion'>
+          <li className='opcion'>
+            <Link to="/home">  </Link>
+          </li>
+          <li className='opcion'>
+            <Link to="/:variable">  </Link>
+          </li>
+          <li className='opcion'>
+            <Link to="/:variable/:colorTexto/:colorFondo">  </Link>
+          </li>
+        </ul>
+
+        <Switch>
+
+          <Route exact path="/home" render={ (routeProps) => <Home {...routeProps} />} />
+          
+          <Route exact path="/:variable" render={ (routeProps) => 
+          (isNaN(routeProps.match.params.variable)) ? <Palabra {...routeProps}/> :
+          <Numero {...routeProps}/>}/>
+
+          <Route exact path="/:variable/:colorTexto/:colorFondo" render={ (routeProps) => <Color {...routeProps} />} /> 
+
+        </Switch>
+                 
+    </BrowserRouter>
     </div>
   );
 }
